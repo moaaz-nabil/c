@@ -1,0 +1,9 @@
+<odoo>
+    <!-- Book Sequence -->
+    <record id="seq_doctors" model="ir.sequence">
+        <field name="name">Doctors Sequence</field>
+        <field name="code">doctors.sequence</field>
+        <field name="prefix">DO</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Search Patient View Tree -->
+        <record id="hospital_appointment_tree_search" model="ir.ui.view">
+            <field name="name">Appintment Search View</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="patient" filter_domain="['|',('patient', 'ilike', self),('doctor', 'ilike', self)]"/>
+                    <group expand="0" string="Group By Gender">
+                        <filter name="doctor" string="Gender" context="{'group_by':'date'}" />
+                    </group>
+                </search> 
+            </field>
+        </record>
+        <!-- Appointment tree view -->
+        <record id="hospital_appointment_tree" model="ir.ui.view">
+            <field name="name">Appointment Tree</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="patient" />            
+                  <field name="patient_phone" />            
+                  <field name="date" />            
+                  <field name="time" />
+                  <field name="patient_id" string="Patient ID" />            
+                </tree>
+            </field>
+        </record>
+
+        <!--Appointment Form View  -->
+        <record id="hospital_appointment_form" model="ir.ui.view">
+            <field name="name">Appointment Form</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <form string="Appointment Form">
+                    <header>
+                        <button string="Confirm" 
+                                name="confirm_button" 
+                                type="object"
+                                states="draft" 
+                                class="oe_highlight"/>
+                        <button string="Done" 
+                                name="done_button" 
+                                type="object"
+                                states="confirm" 
+                                class="oe_highlight"/>                                
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="patient_pic" widget="image">Img</field>
+                            </group>
+                            <group>
+                                <field name="patient">Patient Name</field>                            
+                                <field name="patient_phone">patient Phone</field>                            
+                                <field name="date">Date</field>                            
+                                <field name="time" widget="float_time">Time</field>   
+                                <field name="patient_id">Patient ID</field>                         
+                            </group>
+                        </group>    
+                    <notebook>
+                        <page name="D_note" string="Doctor Note">
+                            <group>
+                                <field name="doctor_note" />
+                            </group>    
+                        </page>
+                        <page name="P_note" string="Pharmacy Note">
+                            <group>
+                                <field name="pharmcy_note" />
+                            </group>
+                        </page>                    
+                    </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread" options="{'post_refresh' :'reciptents'}" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Appointment Calender View  -->
+        <record id="hospital_appointment_view_calendar" model="ir.ui.view">
+            <field name="name">Appointment</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <calendar string="Appointment"  date_start="date" color="patient_id">
+                    <field name="patient" />
+                    <field name="patient_id" />
+                </calendar>
+            </field>
+        </record>
+    </data>
+</odoo>

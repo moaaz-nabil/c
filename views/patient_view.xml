@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Search Patient View Tree -->
+        <record id="hospital_patient_tree_search" model="ir.ui.view">
+            <field name="name">Patient Search View</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <search>
+                    <!-- <field name="name" filter_domain="['|',('name', 'ilike', self),('name', 'ilike', self)]"/> -->
+                    <group expand="0" string="Group By Gender">
+                        <filter name="gender" string="Gender" context="{'group_by':'gender'}" />
+                    </group>
+                </search> 
+            </field>
+        </record>
+        <!-- patient tree view -->
+        <record id="hospital_patient_tree" model="ir.ui.view">
+            <field name="name">Patient Tree</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="name" />            
+                  <field name="age" sum="Total Of Age" />            
+                  <field name="age_group" />            
+                  <field name="gender" />
+                  <field name="phone" />
+                  <field name="patient_id" />             
+                </tree>
+            </field>
+        </record>
+
+        <!--patient Form View  -->
+        <record id="hospital_patient_form" model="ir.ui.view">
+            <field name="name">Patient Tree</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <form string="Patient Form">
+                    <header>
+                        <button string="Create Appointment"
+                                name="%(create_appointment_action)d"
+                                type="action" 
+                                class="oe_highlight" />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="open_patient_appointment" 
+                                    type="object"
+                                    class="oe_stat_button" 
+                                    icon="fa-calendar">
+                                <field  name="appointment_counter"
+                                        widget="statinfo"
+                                        string="Appoinment" />        
+                            </button>
+                            <button name="toggle_active"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-archive">
+                                <field name="active"
+                                widget="boolean_button"
+                                options="{&quot;terminology&quot;: &quot;archive&quot;}" />
+                            </button>
+                        </div>
+                        
+                        <div class="oe_title">
+                        <h1>
+                            <field name="patient_id"  readonly="1" />
+                        </h1>
+                    </div>
+                        <group>
+                            <group>
+                                <field name="patient_picture" widget="image">Img</field>
+                            </group>
+                            <group>
+                                <field name="name">Patient Name</field>                            
+                                <field name="age">Age</field>
+                                <field name="age_group">Age Group</field>                            
+                                <field name="gender">Gender</field>   
+                                <field name="phone">Phone</field>                         
+                            </group>
+                        </group>    
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread" options="{'post_refresh' :'reciptents'}" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Patient Kanaban View  -->
+        <record id="hospital_kanaban_view_kanban" model="ir.ui.view">
+            <field name="name">Patient Kanaban</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <kanban >
+                    <field name="name" />
+                    <field name="id" />
+                    <field name="age" />
+                    <field name="age_group" />
+                    <field name="patient_id" />
+                    <field name="patient_picture" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hsopital_patient_kanban ">
+                                    <div class="o_kanban_image  d-none d-md-block" >
+                                    <img class="o_kanban_image_fill_left rounded-circle" t-att-src = "kanban_image ( 'hospital.patient',
+                                                                                            'patient_picture',
+                                                                                             record.id.raw_value)"
+                                        t-att-title="record.name"
+                                        t-att-alt="record.name"
+                                       /> 
+                                    </div>
+                                <div class="oe_kanban_details ">
+                                    <ul>
+                                        <li>
+                                            <h3>
+                                                <field name="name"/>
+                                            </h3>
+                                        </li>
+                                        <li>
+                                            <field name="age_group"/>
+                                        </li>    
+                                        <li>
+                                            <field name="patient_id"/>
+                                        </li>    
+                                    </ul>    
+                                </div>
+                            </div>        
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>

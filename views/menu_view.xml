@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Action -->
+    <record id="hospital_patientmenu_action" model="ir.actions.act_window">
+        <field name="name">Patient</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="hospital_appointmentmenu_action" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">calendar,tree,form</field>
+    </record>
+
+
+    <!-- Hospital Menu -->
+    <menuitem id="hospital_menu"
+              name="Clincal"/>
+  
+    <!-- Sub Menu -->
+    <menuitem id="hspital_patient_menu"
+              name="Patient"
+              parent="hospital_menu" 
+              sequence="0"
+              action="hospital_patientmenu_action" />
+    <menuitem id="hospital_appointment_menu"
+              name="Appointment"
+              parent="hospital_menu" 
+              sequence="1"
+              action="hospital_appointmentmenu_action" />
+    
+</odoo>
